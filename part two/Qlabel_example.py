@@ -57,7 +57,7 @@ class Window(QWidget):
 
         # for set the pixmap object to label we use "setPixmap(pixmap_object_name)"
         label2.setPixmap(pixmap)
-        # label2.move(200,200)
+        label2.move(200,200)
         
         """
         we can also show the movie without sound by QMovie
@@ -79,6 +79,7 @@ class Window(QWidget):
 
         # set movie to label
         label3.setMovie(movie)
+        label3.move(300,400)
 
 
 app = QApplication(sys.argv)
