@@ -3,6 +3,29 @@ from PyQt6.QtWidgets import QApplication, QDialog, QHBoxLayout, QLabel, QLineEdi
 from PyQt6.QtGui import QIcon, QFont
 import sys
 
+"""
+QInputDialog
+this widget can give us an ability that we can choose item or number and or write something
+in an Dialog window.
+For working with this ability we must to import QInputDialog form PyQt.QtWidget
+and must create an inputdialog object by QInputDialog()
+
+    1.for choose Item values :
+        list_of_many_Itmes = [ ... ]
+        variable1 (for getting item that choosed) , variable2 (for getting state information, like 'ok')
+        
+        var1, var2 = QInputDialog.getItem(parent, "Title", "Message", list_of_many_item, 0,False)
+
+    1.for choose number values :
+        variable1 (for getting number that choosed by spinbox) , variable2 (for getting state information, like 'ok')
+        var1, var2 = QInputDialog.getInt(parent, "Title", "Message", value1, value2, ...)
+
+    1.for Write Text  :
+        variable1 (for getting item that choosed) , variable2 (for getting state information, like 'ok')
+        var1, var2 = QInputDialog.getText(parent, "Title", "Message")
+
+"""
+
 class Window(QDialog):
     def __init__(self):
         super().__init__()
@@ -62,7 +85,7 @@ class Window(QDialog):
         mynumber, ok = QInputDialog.getInt(self, "Country Number", "Enter the Number : ", 1, 2, 3, 4)
         if mynumber and ok:
             self.lineEdit.setText(str(mynumber))
-            
+
 app = QApplication(sys.argv)
 screen = Window()
 sys.exit(app.exec())
