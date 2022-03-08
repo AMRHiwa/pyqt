@@ -1,6 +1,7 @@
-from PyQt6.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
+from PyQt6.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox, QFontDialog, QColorDialog, QDialog
 from PyQt6.QtPrintSupport import QPrinter, QPrintDialog, QPrintPreviewDialog
-from PyQt6.QtCore import QFileInfo
+from PyQt6.QtGui import QFont, QIcon
+from PyQt6.QtCore import QFileInfo, Qt
 import sys
 
 from NotePadApp import Ui_MainWindow
@@ -8,6 +9,7 @@ from NotePadApp import Ui_MainWindow
 class NotePadWindow(QMainWindow,Ui_MainWindow):
     def __init__(self):
         super().__init__()
+        self.setWindowIcon(QIcon("images/applogo.png"))
         self.setupUi(self)
         self.actionSave.triggered.connect(self.save_file)
         self.actionOpen.triggered.connect(self.open_file)
@@ -16,8 +18,59 @@ class NotePadWindow(QMainWindow,Ui_MainWindow):
         self.actionPreview.triggered.connect(self.preview)
         self.actionExport_PDF.triggered.connect(self.export_pdf)
         self.actionExit.triggered.connect(self.quit)
+        self.actionUndo.triggered.connect(self.textEdit.undo)
+        self.actionRedo.triggered.connect(self.textEdit.redo)
+        self.actionCut.triggered.connect(self.textEdit.cut)
+        self.actionCopy.triggered.connect(self.textEdit.copy)
+        self.actionPaste.triggered.connect(self.textEdit.paste)
+        self.actionBold.triggered.connect(self.make_bold)
+        self.actionItalic.triggered.connect(self.make_italic)
+        self.actionUnderline.triggered.connect(self.make_underline)
+        self.actionRight_2.triggered.connect(self.make_right_text)
+        self.actionLeft_2.triggered.connect(self.make_left_text)
+        self.actionCenter.triggered.connect(self.make_center_text)
+        self.actionJustify.triggered.connect(self.make_justify_text)
+        self.actionColor.triggered.connect(self.color_dialog)
+        self.actionFont.triggered.connect(self.font_dialog)
+        self.actionAbout_App.triggered.connect(self.about)
         self.show()
+    def font_dialog(self):
+        font, ok = QFontDialog.getFont()
+        if font and ok:
+            self.textEdit.setFont(font)
 
+    def color_dialog(self):
+        color = QColorDialog.getColor()
+        self.textEdit.setTextColor(color)
+
+    def about(self):
+        QMessageBox.about(self, "About This app", "This app developed by AMR Hiwa\nNotepad program")
+    def make_right_text(self):
+        self.textEdit.setAlignment(Qt.AlignmentFlag.AlignRight)
+
+    def make_left_text(self):
+        self.textEdit.setAlignment(Qt.AlignmentFlag.AlignLeft)
+
+    def make_center_text(self):
+        self.textEdit.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+    def make_justify_text(self):
+        self.textEdit.setAlignment(Qt.AlignmentFlag.AlignJustify)
+
+    def make_underline(self):
+        font = QFont()
+        font.setUnderline(True)
+        self.textEdit.setFont(font)
+
+    def make_italic(self):
+        font = QFont()
+        font.setItalic(True)
+        self.textEdit.setFont(font)
+
+    def make_bold(self):
+        font = QFont()
+        font.setBold(True)
+        self.textEdit.setFont(font)
     def quit(self):
         self.close()
 
